@@ -1,8 +1,9 @@
 import { FiShoppingCart } from "react-icons/fi";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { api } from "../../services/api";
+import { CartContext } from "../../contexts/CartContext";
 
-interface ProductsProps {
+export interface ProductsProps {
     id: number,
     title: string,
     description: string,
@@ -11,6 +12,7 @@ interface ProductsProps {
 }
 
 export function Home() {
+    const { addItemCart } = useContext(CartContext)
     const [products, setProducts] = useState<ProductsProps[]>([])
 
     useEffect(() => {
@@ -22,6 +24,10 @@ export function Home() {
         getProducts()
     }, [])
 
+    function handleCartItem(product: ProductsProps) {
+        addItemCart(product)
+    }
+
     return (
         <div>
             <main className="w-full max-w-7xl px-4 mx-auto ">
@@ -32,12 +38,12 @@ export function Home() {
                             <img className="w-full rounded-lg max-h-70 mb-2 " src={product.cover} alt={product.title} />
                             <p className="font-medium mt-1 mb-2">{product.title}</p>
                             <div className="flex gap-3 items-center">
-                                <strong className="text-zinc-700/90">{product.price.toLocaleString("pt-BR",{
+                                <strong className="text-zinc-700/90">{product.price.toLocaleString("pt-BR", {
                                     style: "currency",
                                     currency: "BRL"
                                 }
                                 )}</strong>
-                                <button className="bg-zinc-900 p-1 rounded">
+                                <button onClick={() => handleCartItem(product)} className="bg-zinc-900 p-1 rounded cursor-pointer">
                                     <FiShoppingCart size={20} color="white" />
                                 </button>
                             </div>
