@@ -1,7 +1,8 @@
 import { useState, createContext, type ReactNode } from "react";
 
 interface CartContextData {
-    cart: CartProps[]
+    cart: CartProps[],
+    cartAmount: number
 }
 
 interface CartProps {
@@ -24,7 +25,7 @@ function CartProvider({ children }: CartProviderProps) {
     const [cart, setCart] = useState<CartProps[]>([])
 
     return (
-        <CartContext.Provider value={{ cart }}>
+        <CartContext.Provider value={{ cart, cartAmount: cart.length }}>
             {children}
         </CartContext.Provider>
     )
