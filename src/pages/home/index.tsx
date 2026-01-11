@@ -2,6 +2,7 @@ import { FiShoppingCart } from "react-icons/fi";
 import { useContext, useEffect, useState } from "react";
 import { api } from "../../services/api";
 import { CartContext } from "../../contexts/CartContext";
+import toast from "react-hot-toast";
 
 export interface ProductsProps {
     id: number,
@@ -25,6 +26,7 @@ export function Home() {
     }, [])
 
     function handleCartItem(product: ProductsProps) {
+        toast.success("Product Added")
         addItemCart(product)
     }
 
